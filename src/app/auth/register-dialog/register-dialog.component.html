@@ -1,0 +1,40 @@
+<div class="container">
+  <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        ngModel
+        required
+        class="form-control"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        id="password"
+        type="password"
+        name="password"
+        ngModel
+        required
+        class="form-control"
+      />
+    </div>
+
+    <div class="d-flex justify-content-between mt-3">
+      <button type="button" class="btn btn-secondary" (click)="goBack()">
+        Back
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!registerForm.form.valid"
+      >
+        Register
+      </button>
+    </div>
+  </form>
+</div>
