@@ -8,7 +8,9 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth';
+  // private apiUrl = 'http://localhost:3000/auth';
+  private apiUrl =
+    'https://plug-ins-factory-back-end-production.up.railway.app/auth';
   private authStatus = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(

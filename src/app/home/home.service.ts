@@ -8,7 +8,10 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class HomeService {
   constructor(private http: HttpClient, private cookieService: CookieService) {}
-  private apiUrl = 'http://localhost:3000/user';
+  // private apiUrl = 'http://localhost:3000/user';
+  private apiUrl =
+    'https://plug-ins-factory-back-end-production.up.railway.app/user';
+
   headers = new HttpHeaders({
     Authorization: 'Bearer ' + this.cookieService.get('token'),
   });
