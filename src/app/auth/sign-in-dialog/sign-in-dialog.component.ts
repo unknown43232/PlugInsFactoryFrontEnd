@@ -39,6 +39,9 @@ export class SignInDialogComponent {
   }
 
   signInWithGoogle(): void {
+    this.authService.signInWithGoogle().subscribe((data) => {
+      console.log(JSON.stringify(data));
+    });
     // Implement sign in with Google here
   }
 

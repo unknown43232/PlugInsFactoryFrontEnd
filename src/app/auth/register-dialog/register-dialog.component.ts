@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { SignInDialogComponent } from '../sign-in-dialog/sign-in-dialog.component';
 
 @Component({
   selector: 'app-register-dialog',
@@ -11,6 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class RegisterDialogComponent {
   constructor(
+    private dialog: MatDialog,
     private authService: AuthService,
     private dialogRef: MatDialogRef<RegisterDialogComponent>,
     private cookieService: CookieService
@@ -34,5 +36,10 @@ export class RegisterDialogComponent {
   }
   goBack(): void {
     this.dialogRef.close();
+    this.dialog.open(SignInDialogComponent, {
+      width: '400px',
+      hasBackdrop: true,
+      disableClose: false,
+    });
   }
 }
