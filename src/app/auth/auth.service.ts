@@ -22,6 +22,18 @@ export class AuthService {
   ) {}
 
   isAuthenticated(): Observable<boolean> {
+    this.http
+      .get(`${this.apiUrl}/isAuthenticated`, {
+        withCredentials: true,
+      })
+      .subscribe(
+        (res: any) => {
+          this.setAuthStatus(res.isAuthenticated);
+        },
+        (err) => {
+          this.setAuthStatus(false);
+        }
+      );
     return this.authStatus.asObservable();
   }
   private hasToken(): boolean {
@@ -29,7 +41,9 @@ export class AuthService {
     return !!token;
   }
   signIn(user: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, user);
+    return this.http.post(`${this.apiUrl}/login`, user, {
+      withCredentials: true,
+    });
   }
   register(user: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, user);
@@ -40,11 +54,26 @@ export class AuthService {
   }
 
   signOut(): void {
-    this.cookieService.delete('token');
-    this.authStatus.next(false);
-    this.router.navigate(['/']); // Redirect to landing page
+    console.log('1');
+
+    this.http
+      .post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
+      .subscribe(
+        (res) => {
+          this.router.navigate(['/']);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
+
   setAuthStatus(value: boolean): void {
     this.authStatus.next(value);
+    if (value) {
+      this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

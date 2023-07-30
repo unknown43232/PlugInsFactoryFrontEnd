@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SignInDialogComponent } from '../auth/sign-in-dialog/sign-in-dialog.component';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-landing',
@@ -13,15 +14,11 @@ export class LandingComponent {
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {}
   ngOnInit(): void {
-    // this.authService.updateStatus();
-    this.authService.isAuthenticated().subscribe((isAuthenticated) => {
-      if (isAuthenticated) {
-        this.router.navigate(['/home']);
-      }
-    });
+    this.authService.isAuthenticated();
   }
 
   openSignInDialog(): void {

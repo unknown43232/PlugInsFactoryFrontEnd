@@ -23,7 +23,7 @@ export class RegisterDialogComponent {
       this.authService.register(form.value).subscribe(
         (res: any) => {
           // If the registration is successful, store the JWT in a cookie
-          this.cookieService.set('token', res.token);
+          // this.cookieService.set('token', res.token);
           this.authService.setAuthStatus(true);
           this.dialogRef.close();
         },

@@ -22,7 +22,7 @@ export class SignInDialogComponent {
     console.log(signInForm);
     if (signInForm.valid) {
       this.authService.signIn(signInForm.value).subscribe((res: any) => {
-        this.cookieService.set('token', res.token);
+        // this.cookieService.set('token', res.token);
         this.authService.setAuthStatus(true);
         this.dialogRef.close();
       });
