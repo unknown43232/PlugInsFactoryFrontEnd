@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
+  production: true,
   apiUrl: 'https://plug-ins-factory-back-end-production.up.railway.app',
 };
