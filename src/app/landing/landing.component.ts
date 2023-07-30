@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { SignInDialogComponent } from '../auth/sign-in-dialog/sign-in-dialog.component';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-landing',
@@ -12,20 +10,14 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class LandingComponent {
   constructor(
-    private dialog: MatDialog,
     private authService: AuthService,
-    private router: Router,
-    private cookieService: CookieService
+    private modalService: NgbModal
   ) {}
   ngOnInit(): void {
     this.authService.isAuthenticated();
   }
 
   openSignInDialog(): void {
-    this.dialog.open(SignInDialogComponent, {
-      width: '400px',
-      hasBackdrop: true,
-      disableClose: false,
-    });
+    this.modalService.open(SignInDialogComponent, { centered: true });
   }
 }

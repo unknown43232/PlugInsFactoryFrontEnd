@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
-import { CookieService } from 'ngx-cookie-service';
 import { SignInDialogComponent } from '../sign-in-dialog/sign-in-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-register-dialog',
@@ -12,32 +11,25 @@ import { SignInDialogComponent } from '../sign-in-dialog/sign-in-dialog.componen
 })
 export class RegisterDialogComponent {
   constructor(
-    private dialog: MatDialog,
-    private authService: AuthService,
-    private dialogRef: MatDialogRef<RegisterDialogComponent>,
-    private cookieService: CookieService
+    private modalService: NgbModal,
+    private authService: AuthService
   ) {}
 
   register(form: NgForm): void {
     if (form.valid) {
       this.authService.register(form.value).subscribe(
         (res: any) => {
+          this.modalService.dismissAll();
           this.authService.setAuthStatus(true);
-          this.dialogRef.close();
         },
         (err) => {
-          // If the registration fails, handle the error
           console.error(err);
         }
       );
     }
   }
   goBack(): void {
-    this.dialogRef.close();
-    this.dialog.open(SignInDialogComponent, {
-      width: '400px',
-      hasBackdrop: true,
-      disableClose: false,
-    });
+    this.modalService.dismissAll();
+    this.modalService.open(SignInDialogComponent, { centered: true });
   }
 }

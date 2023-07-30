@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { CookieService } from 'ngx-cookie-service';
 import { RegisterDialogComponent } from '../register-dialog/register-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-sign-in-dialog',
@@ -12,10 +11,8 @@ import { RegisterDialogComponent } from '../register-dialog/register-dialog.comp
 })
 export class SignInDialogComponent {
   constructor(
-    private dialogRef: MatDialogRef<SignInDialogComponent>,
-    private dialog: MatDialog,
-    private authService: AuthService,
-    private cookieService: CookieService
+    private modalService: NgbModal,
+    private authService: AuthService // private cookieService: CookieService
   ) {}
 
   signIn(signInForm: NgForm): void {
@@ -23,27 +20,18 @@ export class SignInDialogComponent {
     if (signInForm.valid) {
       this.authService.signIn(signInForm.value).subscribe((res: any) => {
         // this.cookieService.set('token', res.token);
+        this.modalService.dismissAll();
         this.authService.setAuthStatus(true);
-        this.dialogRef.close();
       });
     }
   }
 
   openRegisterDialog(): void {
-    this.dialogRef.close();
-    this.dialog.open(RegisterDialogComponent, {
-      width: '400px',
-      hasBackdrop: true,
-      disableClose: false,
-    });
+    this.modalService.dismissAll();
+    this.modalService.open(RegisterDialogComponent, { centered: true });
   }
 
   signInWithGoogle(): void {
     this.authService.signInWithGoogle();
-    // Implement sign in with Google here
-  }
-
-  goBack(): void {
-    this.dialogRef.close();
   }
 }
