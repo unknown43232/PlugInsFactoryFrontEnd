@@ -46,7 +46,9 @@ export class AuthService {
     });
   }
   register(user: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user);
+    return this.http.post(`${this.apiUrl}/register`, user, {
+      withCredentials: true,
+    });
   }
   signInWithGoogle() {
     const googleOAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${this.googleClientId}&response_type=code&scope=openid%20email%20profile&redirect_uri=${this.redirectUri}`;
