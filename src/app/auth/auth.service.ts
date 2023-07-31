@@ -21,7 +21,7 @@ export class AuthService {
     this.http
       .get(`${this.apiUrl}/isAuthenticated`, {
         headers: headers,
-        withCredentials: false,
+        withCredentials: true,
       })
       .subscribe(
         (res: any) => {
