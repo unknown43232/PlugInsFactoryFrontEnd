@@ -12,14 +12,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class SignInDialogComponent {
   constructor(
     private modalService: NgbModal,
-    private authService: AuthService // private cookieService: CookieService
+    private authService: AuthService
   ) {}
 
   signIn(signInForm: NgForm): void {
     console.log(signInForm);
     if (signInForm.valid) {
       this.authService.signIn(signInForm.value).subscribe((res: any) => {
-        // this.cookieService.set('token', res.token);
         this.modalService.dismissAll();
         this.authService.setAuthStatus(true);
       });
