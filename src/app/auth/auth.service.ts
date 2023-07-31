@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,14 +15,18 @@ export class AuthService {
     '560322210794-tis4uva3h869jlsfc910f0fai9svlcbf.apps.googleusercontent.com';
   private redirectUri = `${this.apiUrl}/google/callback`;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private cookieService: CookieService
+  ) {}
 
   isAuthenticated(): Observable<boolean> {
-    const headers = this.getHeadersWithToken();
+    const headers = this.getHeadersWithAuthorization();
     this.http
       .get(`${this.apiUrl}/isAuthenticated`, {
         headers: headers,
-        withCredentials: true,
+        withCredentials: false,
       })
       .subscribe(
         (res: any) => {
@@ -35,12 +40,12 @@ export class AuthService {
   }
   signIn(user: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, user, {
-      withCredentials: true,
+      withCredentials: false,
     });
   }
   register(user: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, user, {
-      withCredentials: true,
+      withCredentials: false,
     });
   }
   signInWithGoogle() {
@@ -49,30 +54,28 @@ export class AuthService {
   }
 
   signOut(): void {
-    this.http
-      .post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
-      .subscribe(
-        (res) => {
-          this.router.navigate(['/']);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+    this.cookieService.delete('token', '/');
+    this.setAuthStatus(false);
   }
-  getHeadersWithToken(): HttpHeaders {
-    const token = this.getCookie('token');
+  getHeadersWithAuthorization(): HttpHeaders {
+    const token = this.cookieService.get('token');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`, // Assuming it's a Bearer token
     });
   }
 
-  private getCookie(name: string): string | null {
-    const value = '; ' + document.cookie;
-    const parts = value.split('; ' + name + '=');
-    if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
-    return null;
+  setCookie(name: string): void {
+    this.cookieService.set(
+      'token',
+      name,
+      new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      '/',
+      undefined,
+      true,
+      undefined
+    );
+    this.setAuthStatus(true);
   }
 
   setAuthStatus(value: boolean): void {

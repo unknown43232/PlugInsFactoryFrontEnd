@@ -20,7 +20,7 @@ export class RegisterDialogComponent {
       this.authService.register(form.value).subscribe(
         (res: any) => {
           this.modalService.dismissAll();
-          this.authService.setAuthStatus(true);
+          this.authService.setCookie(res.token);
         },
         (err) => {
           console.error(err);

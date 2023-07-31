@@ -20,7 +20,8 @@ export class SignInDialogComponent {
     if (signInForm.valid) {
       this.authService.signIn(signInForm.value).subscribe((res: any) => {
         this.modalService.dismissAll();
-        this.authService.setAuthStatus(true);
+        this.authService.setCookie(res.token);
+        // this.authService.setAuthStatus(true);
       });
     }
   }
