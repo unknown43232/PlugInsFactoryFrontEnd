@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -17,9 +17,11 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   isAuthenticated(): Observable<boolean> {
+    const headers = this.getHeadersWithToken();
     this.http
       .get(`${this.apiUrl}/isAuthenticated`, {
-        withCredentials: true,
+        headers: headers,
+        withCredentials: false,
       })
       .subscribe(
         (res: any) => {
@@ -47,8 +49,6 @@ export class AuthService {
   }
 
   signOut(): void {
-    console.log('1');
-
     this.http
       .post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
       .subscribe(
@@ -59,6 +59,20 @@ export class AuthService {
           console.log(err);
         }
       );
+  }
+  getHeadersWithToken(): HttpHeaders {
+    const token = this.getCookie('token');
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`, // Assuming it's a Bearer token
+    });
+  }
+
+  private getCookie(name: string): string | null {
+    const value = '; ' + document.cookie;
+    const parts = value.split('; ' + name + '=');
+    if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+    return null;
   }
 
   setAuthStatus(value: boolean): void {
