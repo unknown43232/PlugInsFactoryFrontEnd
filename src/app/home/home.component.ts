@@ -15,10 +15,7 @@ export class HomeComponent {
     private homeService: HomeService
   ) {}
   ngOnInit(): void {
-    this.homeService.getUserInfo().subscribe(
-      (data) => (this.userInfo = data),
-      (error) => console.error(error)
-    );
+    this.homeService.FetchUserInfo();
   }
 
   signOut(): void {

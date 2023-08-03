@@ -6,7 +6,11 @@ import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+    canActivate: [AuthGuard],
+  },
   // Redirect any unknown routes to the landing page
   { path: '**', redirectTo: '' },
 ];
