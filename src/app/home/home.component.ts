@@ -10,15 +10,8 @@ import { HomeService } from './home.service';
 export class HomeComponent {
   userInfo: any;
 
-  constructor(
-    private authService: AuthService,
-    private homeService: HomeService
-  ) {}
+  constructor(private homeService: HomeService) {}
   ngOnInit(): void {
     this.homeService.FetchUserInfo();
-  }
-
-  signOut(): void {
-    this.authService.signOut();
   }
 }

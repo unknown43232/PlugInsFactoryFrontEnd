@@ -36,4 +36,20 @@ export class HomeService {
       Authorization: `Bearer ${token}`, // Assuming it's a Bearer token
     });
   }
+  updateUserProfile(userInfo: any) {
+    const headers = this.getHeadersWithAuthorization();
+    this.http
+      .put(`${this.apiUrl}/update`, userInfo, {
+        headers: headers,
+        withCredentials: false,
+      })
+      .subscribe(
+        (user) => {
+          this.userInfoSubject.next(user);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
 }
