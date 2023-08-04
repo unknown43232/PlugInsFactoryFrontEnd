@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './home/home.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
-
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [AppComponent, LandingComponent],
@@ -22,6 +22,7 @@ import { CookieService } from 'ngx-cookie-service';
     AuthModule,
     HttpClientModule,
     HomeModule,
+    MatCardModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

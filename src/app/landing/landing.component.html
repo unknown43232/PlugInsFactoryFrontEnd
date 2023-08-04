@@ -1,18 +1,45 @@
-<div class="container">
-  <div class="jumbotron mt-5">
-    <h1 class="display-4">Welcome to PlugInsFactoryFrontEnd!</h1>
-    <p class="lead">
-      This is a simple hero unit, a simple jumbotron-style component for calling
-      extra attention to featured content or information.
-    </p>
-    <hr class="my-4" />
-    <p>Click the button below to sign in.</p>
-    <button
-      type="button"
-      class="btn btn-primary btn-lg"
-      (click)="openSignInDialog()"
-    >
+<div class="landing-container">
+  <div class="hero-section text-center">
+    <h1 class="title">Welcome to Plugin Factory</h1>
+    <p class="subtitle">Unleash the Power of Plugins</p>
+    <button class="btn btn-primary sign-in-btn" (click)="openSignInDialog()">
       Sign In
     </button>
+  </div>
+  <div class="features-section text-center">
+    <h2 class="section-title">Explore Our Features</h2>
+    <div class="feature">
+      <i class="fas fa-comments feature-icon"></i>
+      <h3 class="feature-title">Chat with MongoDB</h3>
+      <p class="feature-description">
+        Discuss your MongoDB with a chat interface.
+      </p>
+    </div>
+    <!-- Add more features here -->
+  </div>
+  <div class="tiers-section text-center">
+    <h2 class="section-title">Choose Your Tier</h2>
+    <div class="row">
+      <div class="col-md-4 tier">
+        <h3 class="tier-title">Basic</h3>
+        <p class="tier-description">Get started with our free plugins.</p>
+        <p>10 requests/month (Read Only)</p>
+        <p>Google Graph Integration</p>
+      </div>
+      <div class="col-md-4 tier">
+        <h3 class="tier-title">Premium</h3>
+        <p class="tier-description">Unlock advanced features and support.</p>
+        <p>100 requests/month (Read Only)</p>
+        <p>Google Graph Integration</p>
+      </div>
+      <div class="col-md-4 tier">
+        <h3 class="tier-title">Enterprise</h3>
+        <p class="tier-description">
+          Custom solutions for your business needs.
+        </p>
+        <p>500 requests/month (Read & Write)</p>
+        <p>Google Graph Integration</p>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,11 +1,50 @@
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+.landing-container {
+  font-family: "Arial", sans-serif;
 }
 
-.jumbotron {
-  width: 100%;
-  max-width: 600px;
+.hero-section {
+  background-color: #f0f0f0;
+  padding: 50px 0;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.sign-in-btn {
+  font-size: 1rem;
+}
+
+.features-section {
+  padding: 50px 0;
+}
+
+.feature-icon {
+  font-size: 2rem;
+  color: #007bff;
+}
+
+.tiers-section {
+  background-color: #f9f9f9;
+  padding: 50px 0;
+}
+
+.tier {
+  padding: 20px;
+}
+
+.tier-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.tier-description {
+  font-size: 1rem;
+  margin-bottom: 10px;
 }
